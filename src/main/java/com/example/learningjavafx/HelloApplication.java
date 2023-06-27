@@ -3,6 +3,7 @@ package com.example.learningjavafx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
@@ -22,9 +23,17 @@ public class HelloApplication extends Application {
 
         Scene scene = new Scene(fxmlLoader.load()); // One hierarchy lower than a stage
 
-        Image icon = new Image("IconCards.png");
-        stage.getIcons().add(icon);
+//      Image icon = new Image("IconCards.png");
+//      stage.getIcons().add(icon);
         stage.setTitle("Shed: Login");
+        stage.setWidth(600);
+        stage.setHeight(600);
+        stage.setResizable(false);
+        /*
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("YOU CAN'T LEAVE!");
+        stage.setFullScreenExitKeyCombination(KeyCombination.valueOf("q"));
+        */
 
         stage.setScene(scene); // Add scene to the stage
         stage.show(); // Shows the stage
