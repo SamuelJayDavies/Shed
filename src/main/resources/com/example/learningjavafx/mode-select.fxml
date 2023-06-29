@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: grey;" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.HelloController">
+<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: grey;" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/20.ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ModeSelectController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -22,7 +26,7 @@
                         <Font name="Georgia" size="19.0" />
                      </font>
                   </Label>
-                  <Label id="welcomeLbl" layoutX="14.0" layoutY="14.0" text="Game Mode Select">
+                  <Label id="welcomeLbl" layoutX="14.0" layoutY="14.0" text="Welcome To Shed">
                      <font>
                         <Font name="Georgia" size="27.0" />
                      </font>
@@ -42,7 +46,7 @@
                         <Font name="Georgia" size="27.0" />
                      </font>
                   </Label>
-                  <Button layoutX="74.0" layoutY="268.0" mnemonicParsing="false" onAction="#onHigherOrLowerBtnClick" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="higherOrLowerBtn" layoutX="74.0" layoutY="268.0" mnemonicParsing="false" onAction="#switchToHigherOrLower" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
                      <effect>
                         <DropShadow radius="7.07" width="9.28" />
                      </effect>

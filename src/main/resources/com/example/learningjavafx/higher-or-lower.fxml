@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="400.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.HigherOrLowerController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="46.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="123.0" />
+      <Label layoutX="192.0" layoutY="14.0" text="Higher or Lower?" />
+      <Button fx:id="modeSelectBtn" layoutX="339.0" layoutY="361.0" mnemonicParsing="false" onAction="#switchToModeSelect" text="Return to Mode Select" />
+      <Button fx:id="higherBtn" layoutX="381.0" layoutY="160.0" mnemonicParsing="false" onAction="#higherBtnClicked" style="-fx-background-color: green;" text="Higher" textFill="WHITE" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="200.0" layoutX="192.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="123.0" />
+      <Button fx:id="lowerBtn" layoutX="381.0" layoutY="200.0" mnemonicParsing="false" onAction="#lowerBtnClicked" prefHeight="25.0" prefWidth="52.0" style="-fx-background-color: red;" text="Lower" textFill="WHITE" />
+      <Label fx:id="lastCardLbl" layoutX="229.0" layoutY="192.0" text="Last Card" wrapText="true" />
+      <Label fx:id="lastCardMsg" layoutX="164.0" layoutY="55.0" text="Last Card Msg" />
+      <Label fx:id="unknownCard" layoutX="82.0" layoutY="192.0" text="Unknown" wrapText="true" />
+   </children>
+</AnchorPane>

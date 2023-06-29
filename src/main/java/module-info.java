@@ -6,4 +6,6 @@ module com.example.learningjavafx {
 
     opens com.example.learningjavafx to javafx.fxml;
     exports com.example.learningjavafx;
+    exports higherOrLower;
+    opens higherOrLower to javafx.fxml;
 }
