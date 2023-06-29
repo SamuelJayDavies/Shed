@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.HelloController">
+<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: grey;" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
       <BorderPane prefHeight="589.0" prefWidth="560.0">
          <left>
-            <Pane prefHeight="560.0" prefWidth="250.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER" />
+            <Pane id="welcomePane" prefHeight="560.0" prefWidth="250.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label id="welcomeLbl" layoutX="11.0" layoutY="523.0" text="Please Select a Game Mode">
+                     <font>
+                        <Font name="Georgia" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label id="welcomeLbl" layoutX="14.0" layoutY="14.0" text="Game Mode Select">
+                     <font>
+                        <Font name="Georgia" size="27.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/IconCards.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
          </left>
          <right>
-            <Pane prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+            <Pane id="modeSelectPane" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+               <children>
+                  <Label id="welcomeLbl" layoutX="14.0" layoutY="14.0" text="Game Mode Select" textFill="WHITE">
+                     <font>
+                        <Font name="Georgia" size="27.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="74.0" layoutY="268.0" mnemonicParsing="false" onAction="#onHigherOrLowerBtnClick" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
+                     <effect>
+                        <DropShadow radius="7.07" width="9.28" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
+               </children></Pane>
          </right>
       </BorderPane>
    </children>

@@ -23,12 +23,13 @@ public class HelloApplication extends Application {
 
         Scene scene = new Scene(fxmlLoader.load()); // One hierarchy lower than a stage
 
-//      Image icon = new Image("IconCards.png");
-//      stage.getIcons().add(icon);
+        scene.getStylesheets().add(getClass().getResource("homeStyle.css").toExternalForm());
+
         stage.setTitle("Shed: Login");
-        stage.setWidth(600);
-        stage.setHeight(600);
-        stage.setResizable(false);
+//        stage.setWidth(600);
+//        stage.setHeight(600);
+        stage.setResizable(true);
+
         /*
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("YOU CAN'T LEAVE!");
