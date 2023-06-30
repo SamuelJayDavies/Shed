@@ -2,6 +2,7 @@ package com.example.learningjavafx;
 
 import higherOrLower.Card;
 import higherOrLower.HigherOrLowerGame;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -35,6 +37,9 @@ public class HigherOrLowerController {
     private Button lowerBtn;
 
     @FXML
+    private Label totalLbl;
+
+    @FXML
     private Button modeSelectBtn;
 
     private HigherOrLowerGame game;
@@ -43,7 +48,7 @@ public class HigherOrLowerController {
 
     @FXML
     private void initialize() {
-        HigherOrLowerGame game = new HigherOrLowerGame();
+        game = new HigherOrLowerGame();
         Card firstCard = game.dealFromDeck();
         lastCard = firstCard;
         lastCardLbl.setText(firstCard.toString());
@@ -63,27 +68,18 @@ public class HigherOrLowerController {
     }
 
     public void higherBtnClicked(ActionEvent event) {
-        result(game.isCorrect(true, lastCard));
+        Card newCard = game.dealFromDeck();
+        unknownCard.setText(newCard.toString());
+        result(game.isCorrect(true, lastCard, newCard), newCard);
     }
 
     public void lowerBtnClicked(ActionEvent event) {
-        result(game.isCorrect(false, lastCard));
+        Card newCard = game.dealFromDeck();
+        unknownCard.setText(newCard.toString());
+        result(game.isCorrect(false, lastCard, newCard), newCard);
     }
 
-    private void result(boolean isCorrect) {
-        Timer T = new Timer();
-        TimerTask delay = new TimerTask() {
-            int i = 2;
-            @Override
-            public void run() {
-                if(i>0) {
-                    i--;
-                } else {
-                    T.cancel();
-                }
-            }
-        };
-
+    private void result(boolean isCorrect, Card newCard) {
         if(isCorrect) {
             game.incrementScore();
             lastCardMsg.setText("Correct, well done!");
@@ -91,12 +87,19 @@ public class HigherOrLowerController {
             lastCardMsg.setText("Incorrect choice, unlucky!");
         }
 
+        lastCard = newCard;
+        totalLbl.setText("Total: " + game.getCurrentScore() + "/" + game.getCardsPlayed());
 
+        PauseTransition delay = new PauseTransition(Duration.seconds(2));
+        delay.setOnFinished(this::resetScreen);
+        delay.play();
 
-        T.schedule(delay, 0, 1000);
-        lastCard = game.dealFromDeck();
+    }
+
+    public void resetScreen(ActionEvent event) {
         lastCardMsg.setText(game.getCurrentCardMsg(lastCard));
-
+        lastCardLbl.setText(lastCard.toString());
+        unknownCard.setText("Unknown");
     }
 
 }
