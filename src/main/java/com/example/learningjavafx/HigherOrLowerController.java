@@ -11,21 +11,18 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class HigherOrLowerController {
-
-
-    @FXML
-    private Label unknownCard;
-
-    @FXML
-    private Label lastCardLbl;
 
     @FXML
     private Label lastCardMsg;
@@ -42,17 +39,30 @@ public class HigherOrLowerController {
     @FXML
     private Button modeSelectBtn;
 
+    @FXML
+    private ImageView unknownCardImg;
+
+    @FXML
+    private ImageView lastCardImg;
+
     private HigherOrLowerGame game;
 
     private Card lastCard;
 
     @FXML
-    private void initialize() {
+    private void initialize() throws FileNotFoundException {
         game = new HigherOrLowerGame();
-        Card firstCard = game.dealFromDeck();
-        lastCard = firstCard;
-        lastCardLbl.setText(firstCard.toString());
-        lastCardMsg.setText(game.getCurrentCardMsg(firstCard));
+        lastCard = game.dealFromDeck();
+        lastCardImg.setImage(lastCard.getImage());
+
+        try {
+            FileInputStream stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\back_of_card.png");
+            unknownCardImg.setImage(new Image(stream));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        lastCardMsg.setText(game.getCurrentCardMsg(lastCard));
     }
 
     private Stage stage;
@@ -69,13 +79,13 @@ public class HigherOrLowerController {
 
     public void higherBtnClicked(ActionEvent event) {
         Card newCard = game.dealFromDeck();
-        unknownCard.setText(newCard.toString());
+        unknownCardImg.setImage(newCard.getImage());
         result(game.isCorrect(true, lastCard, newCard), newCard);
     }
 
     public void lowerBtnClicked(ActionEvent event) {
         Card newCard = game.dealFromDeck();
-        unknownCard.setText(newCard.toString());
+        unknownCardImg.setImage(newCard.getImage());
         result(game.isCorrect(false, lastCard, newCard), newCard);
     }
 
@@ -98,8 +108,13 @@ public class HigherOrLowerController {
 
     public void resetScreen(ActionEvent event) {
         lastCardMsg.setText(game.getCurrentCardMsg(lastCard));
-        lastCardLbl.setText(lastCard.toString());
-        unknownCard.setText("Unknown");
+        lastCardImg.setImage(lastCard.getImage());
+        try {
+            FileInputStream stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\back_of_card.png");
+            unknownCardImg.setImage(new Image(stream));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

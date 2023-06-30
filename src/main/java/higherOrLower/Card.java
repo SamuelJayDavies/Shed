@@ -1,5 +1,10 @@
 package higherOrLower;
 
+import javafx.scene.image.Image;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 /**
  * Class that models a playing card including the value and suit of the card.
  */
@@ -20,6 +25,8 @@ public class Card {
      */
     private final Suit suit;
 
+    private final Image image;
+
     /**
      * A String array containing all the cardName equivalents for the integer values.
      */
@@ -35,6 +42,13 @@ public class Card {
         this.value = value;
         this.cardName = cardNames[value-1];
         this.suit = suit;
+        String fileName = this.value + "_of_" + this.suit.name().toLowerCase() + ".png";
+        try {
+            FileInputStream stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\" + fileName);
+            this.image = new Image(stream);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -59,6 +73,10 @@ public class Card {
      */
     public Suit getSuit() {
         return suit;
+    }
+
+    public Image getImage() {
+        return this.image;
     }
 
     /**
