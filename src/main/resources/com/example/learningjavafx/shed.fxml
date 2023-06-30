@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ShedController">
+   <children>
+      <AnchorPane layoutX="14.0" layoutY="386.0" prefHeight="200.0" prefWidth="974.0" style="-fx-border-color: black;">
+         <children>
+            <Pane layoutX="14.0" layoutY="11.0" prefHeight="175.0" prefWidth="359.0" style="-fx-border-color: black; -fx-background-color: green;">
+               <children>
+                  <Label layoutX="143.0" layoutY="14.0" text="General Hand" textFill="WHITE" />
+                  <Pane layoutX="15.0" layoutY="36.0" prefHeight="128.0" prefWidth="325.0">
+                     <children>
+                        <ImageView fitHeight="106.0" fitWidth="73.0" layoutX="101.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/2_of_hearts.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="106.0" fitWidth="73.0" layoutX="125.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/13_of_spades.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="106.0" fitWidth="73.0" layoutX="151.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/6_of_clubs.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane layoutX="379.0" layoutY="11.0" prefHeight="175.0" prefWidth="359.0" style="-fx-border-color: black; -fx-background-color: green;">
+               <children>
+                  <Label layoutX="99.0" layoutY="14.0" text="Constrained and Hidden Hand" textFill="WHITE" />
+                  <Pane layoutX="15.0" layoutY="36.0" prefHeight="128.0" prefWidth="325.0">
+                     <children>
+                        <ImageView fitHeight="128.0" fitWidth="91.0" layoutX="29.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/back_of_card.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="106.0" fitWidth="73.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/10_of_clubs.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="128.0" fitWidth="91.0" layoutX="135.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/back_of_card.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="106.0" fitWidth="73.0" layoutX="120.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/13_of_clubs.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="128.0" fitWidth="91.0" layoutX="241.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/back_of_card.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="106.0" fitWidth="73.0" layoutX="226.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../java/higherOrLower/cards/2_of_diamonds.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
