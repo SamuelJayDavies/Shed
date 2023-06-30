@@ -3,8 +3,11 @@ package com.example.learningjavafx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class MainApplication extends Application {
@@ -23,6 +26,14 @@ public class MainApplication extends Application {
 //        stage.setWidth(600);
 //        stage.setHeight(600);
         stage.setResizable(true);
+        final String dir = System.getProperty("user.dir");
+        System.out.println("current dir = " + dir);
+        try {
+            FileInputStream stream = new FileInputStream("src\\images\\IconCards.png");
+            stage.getIcons().add(new Image(stream));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         /*
         stage.setFullScreen(true);

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: grey;" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/20.ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ModeSelectController">
+<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: grey;" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ModeSelectController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -33,7 +33,7 @@
                   </Label>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/IconCards.png" />
+                        <Image url="@../../../../../images/IconCards.png" />
                      </image>
                   </ImageView>
                </children></Pane>

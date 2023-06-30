@@ -50,7 +50,7 @@ public class HigherOrLowerController {
     private Card lastCard;
 
     @FXML
-    private void initialize() throws FileNotFoundException {
+    private void initialize() {
         game = new HigherOrLowerGame();
         lastCard = game.dealFromDeck();
         lastCardImg.setImage(lastCard.getImage());
