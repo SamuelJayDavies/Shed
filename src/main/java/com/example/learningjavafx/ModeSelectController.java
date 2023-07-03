@@ -29,4 +29,14 @@ public class ModeSelectController {
         stage.show();
     }
 
+    public void switchToShed(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("shed.fxml"));
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Shed: Higher or Lower");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

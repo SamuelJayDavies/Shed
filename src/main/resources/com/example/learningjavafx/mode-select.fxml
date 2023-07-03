@@ -46,7 +46,7 @@
                         <Font name="Georgia" size="27.0" />
                      </font>
                   </Label>
-                  <Button fx:id="higherOrLowerBtn" layoutX="74.0" layoutY="268.0" mnemonicParsing="false" onAction="#switchToHigherOrLower" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="higherOrLowerBtn" layoutX="74.0" layoutY="154.0" mnemonicParsing="false" onAction="#switchToHigherOrLower" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
                      <effect>
                         <DropShadow radius="7.07" width="9.28" />
                      </effect>
@@ -54,6 +54,7 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
+                  <Button layoutX="99.0" layoutY="370.0" mnemonicParsing="false" onAction="#switchToShed" text="Shed" />
                </children></Pane>
          </right>
       </BorderPane>
