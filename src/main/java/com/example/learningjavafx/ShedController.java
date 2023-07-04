@@ -1,6 +1,7 @@
 package com.example.learningjavafx;
 
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import shed.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 public class ShedController {
 
     // FXML Variables
+    @FXML
+    private AnchorPane mainStage;
 
     @FXML
     private Pane generalHandPane;
@@ -29,6 +32,12 @@ public class ShedController {
     @FXML
     private TextArea gameLogTxt;
 
+    @FXML
+    private ImageView discardPileImg;
+
+    @FXML
+    private ImageView drawPileImg;
+
     // Java Variables
 
     private Deck drawPile;
@@ -37,8 +46,16 @@ public class ShedController {
 
     private ArrayList<Player> players;
 
+    private double startDragX;
+
+    private double startDragY;
+
     @FXML
     private void initialize() {
+        // Scene Related
+
+
+        // Game Related
         players = new ArrayList<>();
         this.players.add(new Player("Sam", false));
         this.players.add(new Player("John", true));
@@ -93,6 +110,39 @@ public class ShedController {
         int i = cards.size();
         for (int j = 0; j < i; j++) {
             CardImg cardImg = new CardImg(cards.get(j));
+
+            cardImg.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    startDragX = mouseEvent.getSceneX();
+                    startDragY = mouseEvent.getSceneY();
+                    mainStage.getChildren().add(cardImg);
+                    generalHandPane.getChildren().remove(cardImg);
+                    cardImg.setX(startDragX);
+                    cardImg.setY(startDragY);
+                }
+            });
+
+            cardImg.setOnMouseReleased(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    generalHandPane.getChildren().add(cardImg);
+                    mainStage.getChildren().remove(cardImg);
+                    cardImg.setX(startDragX);
+                    cardImg.setY(startDragY);
+                }
+            });
+
+            cardImg.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    cardImg.setTranslateX(mouseEvent.getSceneX() - startDragX);
+                    cardImg.setTranslateY(mouseEvent.getSceneY() - startDragY);
+
+                }
+            });
+
+
             int cardOffset = 20;
             double middleOfWindow = generalHandPane.getPrefWidth() / 2;
             int totalCardOffset = (i - 1) * cardOffset;

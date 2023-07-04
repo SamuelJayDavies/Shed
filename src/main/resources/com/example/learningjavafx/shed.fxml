@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="742.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ShedController">
+<AnchorPane fx:id="mainStage" prefHeight="742.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ShedController">
    <children>
       <AnchorPane layoutX="14.0" layoutY="502.0" prefHeight="226.0" prefWidth="974.0" style="-fx-border-color: black;">
          <children>
@@ -42,7 +42,7 @@
                <children>
                   <Label layoutX="87.0" layoutY="15.0" text="Draw" textFill="WHITE" />
                   <Label layoutX="240.0" layoutY="15.0" text="Discard" textFill="WHITE" />
-                  <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="51.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="drawPileImg" fitHeight="150.0" fitWidth="100.0" layoutX="51.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../java/higherOrLower/cards/back_of_card.png" />
                      </image>
@@ -50,7 +50,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="100.0" layoutX="210.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="discardPileImg" fitHeight="150.0" fitWidth="100.0" layoutX="210.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../java/higherOrLower/cards/1_of_hearts.png" />
                      </image>

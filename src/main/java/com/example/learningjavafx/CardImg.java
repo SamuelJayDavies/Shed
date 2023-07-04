@@ -1,8 +1,9 @@
 package com.example.learningjavafx;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.*;
 import shed.Card;
-import javafx.scene.input.MouseEvent;
 
 public class CardImg extends ImageView {
 
@@ -18,7 +19,6 @@ public class CardImg extends ImageView {
 
        this.setOnMouseExited(mouseEvent -> cardLower());
 
-
        this.setOnMouseClicked(mouseEvent -> System.out.println(getCard()));
     }
 
@@ -33,8 +33,6 @@ public class CardImg extends ImageView {
     public void setOnMouseClicked(MouseEvent event) {
         System.out.println(getCard());
     }
-
-
     public Card getCard() {
         return this.card;
     }
