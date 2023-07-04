@@ -20,19 +20,40 @@ public class CardImg extends ImageView {
        this.setOnMouseExited(mouseEvent -> cardLower());
 
        this.setOnMouseClicked(mouseEvent -> System.out.println(getCard()));
+
+       this.setOnDragDetected(mouseEvent -> cardOnDragged());
+
+       this.setOnMouseDragged(new EventHandler<MouseEvent>() {
+           @Override
+           public void handle(MouseEvent mouseEvent) {
+               mouseEvent.setDragDetect(true);
+           }
+       });
+
     }
 
     private void cardRaise() {
         this.setY(-10);
     }
 
-    public void cardLower() {
+    private void cardLower() {
         this.setY(10);
     }
 
-    public void setOnMouseClicked(MouseEvent event) {
+    private void setOnMouseClicked(MouseEvent event) {
         System.out.println(getCard());
     }
+
+    private void cardOnDragged() {
+        System.out.println("Card Selected");
+
+        Dragboard db = this.startDragAndDrop(TransferMode.ANY);
+
+        ClipboardContent content = new ClipboardContent();
+        content.putString(this.card.toString());
+        db.setContent(content);
+    }
+
     public Card getCard() {
         return this.card;
     }
