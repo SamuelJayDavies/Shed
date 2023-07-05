@@ -78,7 +78,7 @@
             <Pane layoutX="379.0" layoutY="11.0" prefHeight="203.0" prefWidth="359.0" style="-fx-border-color: black; -fx-background-color: green;">
                <children>
                   <Label layoutX="99.0" layoutY="14.0" text="Constrained and Hidden Hand" textFill="WHITE" />
-                  <Pane layoutX="15.0" layoutY="36.0" prefHeight="128.0" prefWidth="325.0" />
+                  <Pane fx:id="cpuAltHandPane" layoutX="15.0" layoutY="36.0" prefHeight="128.0" prefWidth="325.0" />
                </children>
             </Pane>
             <Pane layoutX="748.0" layoutY="11.0" prefHeight="203.0" prefWidth="212.0" style="-fx-background-color: green; -fx-border-color: black;">
