@@ -125,6 +125,21 @@ public class ShedController {
                 dragEvent.consume();
             }
         });
+
+        discardPileImg.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                pickUpDiscardPile(players.get(0));
+                // CPU plays card
+                setCurrentState();
+            }
+        });
+    }
+
+    private void pickUpDiscardPile(Player player) {
+        gameLogTxt.setText(gameLogTxt.getText() + player.getName() + " picks up the discard pile");
+        player.addToGeneral(discardPile.getCards());
+        discardPile.empty();
     }
 
     private Hand getCurrentHand(Player player) {
