@@ -27,7 +27,7 @@
             <Pane layoutX="747.0" layoutY="11.0" prefHeight="203.0" prefWidth="212.0" style="-fx-background-color: green; -fx-border-color: black;">
                <children>
                   <Label layoutX="85.0" layoutY="14.0" text="Player 1" textFill="WHITE" />
-                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="56.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="p1profileImg" fitHeight="100.0" fitWidth="100.0" layoutX="56.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../images/profilePicture.png" />
                      </image>
@@ -72,7 +72,7 @@
             <Pane layoutX="14.0" layoutY="11.0" prefHeight="203.0" prefWidth="359.0" style="-fx-border-color: black; -fx-background-color: green;">
                <children>
                   <Label layoutX="143.0" layoutY="14.0" text="General Hand" textFill="WHITE" />
-                  <Pane fx:id="generalHandPane1" layoutX="17.0" layoutY="31.0" prefHeight="160.0" prefWidth="325.0" />
+                  <Pane fx:id="cpuGeneralHandPane" layoutX="17.0" layoutY="31.0" prefHeight="160.0" prefWidth="325.0" />
                </children>
             </Pane>
             <Pane layoutX="379.0" layoutY="11.0" prefHeight="203.0" prefWidth="359.0" style="-fx-border-color: black; -fx-background-color: green;">
@@ -84,7 +84,7 @@
             <Pane layoutX="748.0" layoutY="11.0" prefHeight="203.0" prefWidth="212.0" style="-fx-background-color: green; -fx-border-color: black;">
                <children>
                   <Label layoutX="85.0" layoutY="14.0" text="Player 2" textFill="WHITE" />
-                  <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="56.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="p2profileImg" fitHeight="100.0" fitWidth="100.0" layoutX="56.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../images/profilePicture.png" />
                      </image>

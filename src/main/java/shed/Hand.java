@@ -52,6 +52,15 @@ public class Hand {
         }
     }
 
+    public Card getCardByString(String toString) {
+        for(Card card: this.cards) {
+            if(card.toString().equalsIgnoreCase(toString)) {
+                return card;
+            }
+        }
+        return null;
+    }
+
     /**
      * Returns the highest card in the hand.
      *
