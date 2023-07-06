@@ -1,10 +1,15 @@
 package com.example.learningjavafx;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import shed.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,7 +22,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Random;
 
 public class ShedController {
@@ -52,6 +59,13 @@ public class ShedController {
 
     @FXML
     private ImageView p2profileImg;
+
+    @FXML
+    private Button continueBtn;
+
+    // Java FX
+    private Stage stage;
+    private Scene scene;
 
     // Java Variables
 
@@ -105,19 +119,36 @@ public class ShedController {
             public void handle(DragEvent dragEvent) {
                 Dragboard db = dragEvent.getDragboard();
                 if(db.hasString()) {
-                    currentHand = getCurrentHand(players.get(0));
+                    Player p1 = players.get(0);
+                    currentHand = getCurrentHand(p1);
                     Card cardToPlay = currentHand.getCardByString(dragEvent.getDragboard().getString());
                     System.out.println(cardToPlay);
                     if(isCardPlayable(cardToPlay)) {
                         playCard(cardToPlay, currentHand, players.get(0));
-                        cpuPlaysCard(players.get(1));
-                        setCurrentState();
+                        if(hasWon(p1)) {
+                            // Add confirmation of victory here
+                            setCurrentState();
+                        } else if(cardToPlay.getValue() == 10) {
+                            gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card");
+                        } else {
+                            cpuPlaysCard(players.get(1));
+                            // Check if p2 wins!
+                            setCurrentState();
+                        }
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Invalid Card");
-                        alert.setHeaderText("The card you played was invalid");
-                        alert.setContentText("Please try another card");
-                        alert.showAndWait();
+                        if(currentHand.getHandType().equals(HandType.Hidden)) {
+                            playCard(cardToPlay, currentHand, players.get(0));
+                            pickUpDiscardPile(players.get(0));
+                            // Play it then pick it up??
+                            cpuPlaysCard(players.get(1));
+                            setCurrentState();
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Invalid Card");
+                            alert.setHeaderText("The card you played was invalid");
+                            alert.setContentText("Please try another card");
+                            alert.showAndWait();
+                        }
                     }
                     dragEvent.setDropCompleted(true);
                 } else {
@@ -137,6 +168,36 @@ public class ShedController {
         });
     }
 
+    public void switchToVictoryScreen(ActionEvent event) throws IOException {
+        boolean gameOver = false;
+        for(Player player: players) {
+            if(hasWon(player)) {
+                gameOver = true;
+            }
+        }
+
+        if(gameOver) {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("victory-screen.fxml"));
+
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            stage.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Game is not over");
+            alert.setHeaderText("The game has not finished");
+            alert.setContentText("Click this button when the game has finished");
+            alert.showAndWait();
+        }
+    }
+
+    private boolean hasWon(Player player) {
+        return player.getHiddenHand().getNumOfCards() +
+                player.getConstrainedHand().getNumOfCards() +
+                player.getGeneralHand().getNumOfCards() == 0;
+    }
+
     private void pickUpDiscardPile(Player player) {
         gameLogTxt.setText(gameLogTxt.getText() + player.getName() + " picks up the discard pile\n");
         player.addToGeneral(discardPile.getCards());
@@ -147,7 +208,15 @@ public class ShedController {
         Hand cpuCurrentHand = getCurrentHand(player);
         Card cpuCardToPlay = cpuCardChoice(cpuCurrentHand);
         if(cpuCardToPlay != null) {
-            playCard(cpuCardToPlay, cpuCurrentHand, player);
+            if(cpuCurrentHand.getHandType().equals(HandType.Hidden)) {
+                if(isCardPlayable(cpuCardToPlay)) {
+                    playCard(cpuCardToPlay, cpuCurrentHand, player);
+                } else {
+                    pickUpDiscardPile(player);
+                }
+            } else {
+                playCard(cpuCardToPlay, cpuCurrentHand, player);
+            }
         } else {
             pickUpDiscardPile(player);
         }
@@ -200,7 +269,7 @@ public class ShedController {
 
     private void setCurrentState() {
         Player p1 = players.get(0);
-        p1.getGeneralHand().sortHand();
+        p1.getGeneralHand().sortHand();                                                         // Replace with isCPU from Player
         generalHandPane.getChildren().addAll(setGeneralHandImg(p1.getGeneralHand().getCards(), true));
 
         altHandPane.getChildren().addAll(
@@ -257,17 +326,17 @@ public class ShedController {
     }
 
     private Card cpuCardChoice(Hand currentHand) {
+        Card cardToPlay = null;
+        Card comparisonCard = discardPile.peekTop();
+
         if(currentHand.getHandType().equals(HandType.Hidden)) {
             Random random = new Random();
-            return currentHand.getCard(random.nextInt(currentHand.getNumOfCards()));
+            cardToPlay =  currentHand.getCard(random.nextInt(currentHand.getNumOfCards()));
         }
-
-        Card comparisonCard = discardPile.peekTop();
 
         if (comparisonCard == null) {
             return currentHand.getLowestRegularCard();
         } else {
-            Card cardToPlay = null;
             int cardDiff = -1;
             if (comparisonCard.getValue() != 7) {
                 for (Card card : currentHand.getCards()) {
@@ -372,7 +441,7 @@ public class ShedController {
 
         int i = hiddenCards.size();
         for (int j = 0; j < i; j++) {
-            CardImg cardImg = new CardImg(constrainedCards.get(j));
+            CardImg cardImg = new CardImg(hiddenCards.get(j));
             cardImg.setImage(cardImg.getCard().getCardBack());
             int cardOffset = 110;
             double middleOfWindow = workingPane.getPrefWidth() / 2;
@@ -386,11 +455,6 @@ public class ShedController {
         int j = constrainedCards.size();
         for (int k = 0; k < j; k++) {
             CardImg cardImg = new CardImg(constrainedCards.get(k));
-
-            if(!(isPlayer)) {
-                cardImg.setImage(cardImg.getCard().getCardBack());
-            }
-
             int cardOffset = 120;
             double middleOfWindow = workingPane.getPrefWidth() / 2;
             int totalCardOffset = (j - 1) * cardOffset;
@@ -401,4 +465,5 @@ public class ShedController {
         }
         return list;
     }
+
 }
