@@ -34,7 +34,7 @@ public class ModeSelectController {
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Shed: Higher or Lower");
+        stage.setTitle("Shed: Basic");
         stage.setScene(scene);
         stage.show();
     }

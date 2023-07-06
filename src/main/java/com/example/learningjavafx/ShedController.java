@@ -127,6 +127,7 @@ public class ShedController {
                         playCard(cardToPlay, currentHand, players.get(0));
                         if(hasWon(p1)) {
                             // Add confirmation of victory here
+
                             setCurrentState();
                         } else if(cardToPlay.getValue() == 10) {
                             gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card");
