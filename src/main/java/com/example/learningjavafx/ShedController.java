@@ -42,6 +42,12 @@ public class ShedController {
     private ImageView drawPileImg;
 
     @FXML
+    private Pane cpuGeneralHandPane;
+
+    @FXML
+    private Pane cpuAltHandPane;
+
+    @FXML
     private ImageView p1profileImg;
 
     @FXML
@@ -99,17 +105,12 @@ public class ShedController {
             public void handle(DragEvent dragEvent) {
                 Dragboard db = dragEvent.getDragboard();
                 if(db.hasString()) {
+                    currentHand = getCurrentHand(players.get(0));
                     Card cardToPlay = currentHand.getCardByString(dragEvent.getDragboard().getString());
                     System.out.println(cardToPlay);
                     if(isCardPlayable(cardToPlay)) {
                         playCard(cardToPlay, currentHand, players.get(0));
-                        Hand cpuCurrentHand = getCurrentHand(players.get(1));
-                        Card cpuCardToPlay = cpuCardChoice(cpuCurrentHand);
-                        if(cpuCardToPlay != null) {
-                            playCard(cpuCardToPlay, cpuCurrentHand, players.get(1));
-                        } else {
-                            // CPU picks up cards
-                        }
+                        cpuPlaysCard(players.get(1));
                         setCurrentState();
                     } else {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -130,16 +131,26 @@ public class ShedController {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 pickUpDiscardPile(players.get(0));
-                // CPU plays card
+                cpuPlaysCard(players.get(1));
                 setCurrentState();
             }
         });
     }
 
     private void pickUpDiscardPile(Player player) {
-        gameLogTxt.setText(gameLogTxt.getText() + player.getName() + " picks up the discard pile");
+        gameLogTxt.setText(gameLogTxt.getText() + player.getName() + " picks up the discard pile\n");
         player.addToGeneral(discardPile.getCards());
         discardPile.empty();
+    }
+
+    private void cpuPlaysCard(Player player) {
+        Hand cpuCurrentHand = getCurrentHand(player);
+        Card cpuCardToPlay = cpuCardChoice(cpuCurrentHand);
+        if(cpuCardToPlay != null) {
+            playCard(cpuCardToPlay, cpuCurrentHand, player);
+        } else {
+            pickUpDiscardPile(player);
+        }
     }
 
     private Hand getCurrentHand(Player player) {
@@ -190,15 +201,22 @@ public class ShedController {
     private void setCurrentState() {
         Player p1 = players.get(0);
         p1.getGeneralHand().sortHand();
-        generalHandPane.getChildren().addAll(setGeneralHandImg(p1.getGeneralHand().getCards()));
+        generalHandPane.getChildren().addAll(setGeneralHandImg(p1.getGeneralHand().getCards(), true));
 
         altHandPane.getChildren().addAll(
-                setAltHandImg(p1.getHiddenHand().getCards(), p1.getConstrainedHand().getCards()));
+                setAltHandImg(p1.getHiddenHand().getCards(), p1.getConstrainedHand().getCards(), true));
+
+        Player p2 = players.get(1);
+        p2.getGeneralHand().sortHand();
+
+        cpuGeneralHandPane.getChildren().addAll(setGeneralHandImg(p2.getGeneralHand().getCards(), false));
+        cpuAltHandPane.getChildren().addAll(
+                setAltHandImg(p2.getHiddenHand().getCards(), p2.getConstrainedHand().getCards(), false));
 
         if(!(discardPile.isEmpty())) {
             discardPileImg.setImage(discardPile.peekTop().getImage());
         } else {
-            discardPileImg.setAccessibleText("Empty");
+            discardPileImg.setImage(null);
         }
     }
 
@@ -282,12 +300,22 @@ public class ShedController {
 
     }
 
-    private ArrayList<ImageView> setGeneralHandImg(ArrayList<Card> cards) {
-        generalHandPane.getChildren().clear();
+    private ArrayList<ImageView> setGeneralHandImg(ArrayList<Card> cards, boolean isPlayer) {
+        Pane workingPane;
+        if(isPlayer) {
+            workingPane = generalHandPane;
+        } else {
+            workingPane = cpuGeneralHandPane;
+        }
+        workingPane.getChildren().clear();
         ArrayList<ImageView> list = new ArrayList<>();
         int i = cards.size();
         for (int j = 0; j < i; j++) {
             CardImg cardImg = new CardImg(cards.get(j));
+
+            if(!(isPlayer)) {
+                cardImg.setImage(cardImg.getCard().getCardBack());
+            }
 
 //            cardImg.setOnMousePressed(new EventHandler<MouseEvent>() {
 //                @Override
@@ -322,7 +350,7 @@ public class ShedController {
 
 
             int cardOffset = 20;
-            double middleOfWindow = generalHandPane.getPrefWidth() / 2;
+            double middleOfWindow = workingPane.getPrefWidth() / 2;
             int totalCardOffset = (i - 1) * cardOffset;
             cardImg.setX(middleOfWindow - (((cardImg.getFitWidth()) + totalCardOffset) / 2) + (j * cardOffset));
             cardImg.setY(10);
@@ -332,8 +360,14 @@ public class ShedController {
         return list;
     }
 
-    private ArrayList<ImageView> setAltHandImg(ArrayList<Card> hiddenCards, ArrayList<Card> constrainedCards) {
-        altHandPane.getChildren().clear();
+    private ArrayList<ImageView> setAltHandImg(ArrayList<Card> hiddenCards, ArrayList<Card> constrainedCards, boolean isPlayer) {
+        Pane workingPane;
+        if(isPlayer) {
+            workingPane = altHandPane;
+        } else {
+            workingPane = cpuAltHandPane;
+        }
+        workingPane.getChildren().clear();
         ArrayList<ImageView> list = new ArrayList<>();
 
         int i = hiddenCards.size();
@@ -341,7 +375,7 @@ public class ShedController {
             CardImg cardImg = new CardImg(constrainedCards.get(j));
             cardImg.setImage(cardImg.getCard().getCardBack());
             int cardOffset = 110;
-            double middleOfWindow = altHandPane.getPrefWidth() / 2;
+            double middleOfWindow = workingPane.getPrefWidth() / 2;
             int totalCardOffset = (i - 1) * cardOffset;
             cardImg.setX(middleOfWindow - (((cardImg.getFitWidth()) + totalCardOffset) / 2) + (j * cardOffset) + (10 + j*10));
             cardImg.setY(10);
@@ -352,8 +386,13 @@ public class ShedController {
         int j = constrainedCards.size();
         for (int k = 0; k < j; k++) {
             CardImg cardImg = new CardImg(constrainedCards.get(k));
+
+            if(!(isPlayer)) {
+                cardImg.setImage(cardImg.getCard().getCardBack());
+            }
+
             int cardOffset = 120;
-            double middleOfWindow = altHandPane.getPrefWidth() / 2;
+            double middleOfWindow = workingPane.getPrefWidth() / 2;
             int totalCardOffset = (j - 1) * cardOffset;
             cardImg.setX(middleOfWindow - (((cardImg.getFitWidth()) + totalCardOffset) / 2) + (k * cardOffset));
             cardImg.setY(10);
