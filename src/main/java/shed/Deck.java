@@ -11,7 +11,7 @@ public class Deck {
     /**
      * The size of a deck of cards.
      */
-    static final int DECK_SIZE = 52;
+    public static final int DECK_SIZE = 52;
 
     /**
      * An arrayList containing the Deck cards.

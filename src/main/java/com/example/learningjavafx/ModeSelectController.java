@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import shed.GameType;
 
 import java.io.IOException;
 
@@ -29,12 +30,32 @@ public class ModeSelectController {
         stage.show();
     }
 
-    public void switchToShed(ActionEvent event) throws IOException {
+    public void switchToBasicShed(ActionEvent event) throws IOException {
+        switchToShed(event, GameType.Basic);
+    }
+
+    public void switchToBasicFastShed(ActionEvent event) throws IOException {
+        switchToShed(event, GameType.BasicFast);
+    }
+
+    public void switchToRegularShed(ActionEvent event) throws IOException {
+        switchToShed(event, GameType.Regular);
+    }
+
+    public void switchToRegularFastShed(ActionEvent event) throws IOException {
+        switchToShed(event, GameType.RegularFast);
+    }
+
+    private void switchToShed(ActionEvent event, GameType gameType) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("shed.fxml"));
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
         stage.setTitle("Shed: Basic");
+
+        ShedController shedController = fxmlLoader.getController();
+        shedController.setGameTypeLbl(gameType);
+
         stage.setScene(scene);
         stage.show();
     }

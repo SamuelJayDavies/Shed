@@ -8,8 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainStage" prefHeight="742.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ShedController">
+<AnchorPane fx:id="mainStage" prefHeight="742.0" prefWidth="1000.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ShedController">
    <children>
       <AnchorPane layoutX="14.0" layoutY="502.0" prefHeight="226.0" prefWidth="974.0" style="-fx-border-color: black;">
          <children>
@@ -59,6 +60,7 @@
                         <Rectangle2D />
                      </viewport>
                   </ImageView>
+                  <Label fx:id="drawDeckLbl" alignment="CENTER" layoutX="61.0" layoutY="170.0" prefHeight="17.0" prefWidth="81.0" text="Cards: 0/52" textFill="WHITE" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="13.0" prefHeight="200.0" prefWidth="359.0" style="-fx-border-color: white;">
@@ -70,6 +72,16 @@
             <Pane layoutX="749.0" layoutY="13.0" prefHeight="200.0" prefWidth="212.0" style="-fx-border-color: white;">
                <children>
                   <Button fx:id="continueBtn" layoutX="133.0" layoutY="161.0" mnemonicParsing="false" onAction="#switchToVictoryScreen" text="Continue" />
+                  <Label fx:id="gameTypeBackLbl" alignment="CENTER" layoutX="3.0" layoutY="85.0" prefHeight="35.0" prefWidth="212.0" text="Game Type">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="gameTypeFrontLbl" alignment="CENTER" layoutY="85.0" prefHeight="35.0" prefWidth="212.0" text="Game Type" textFill="WHITE">
+                     <font>
+                        <Font size="30.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children></Pane>
