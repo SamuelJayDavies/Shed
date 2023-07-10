@@ -1,5 +1,7 @@
 package com.example.learningjavafx;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -8,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import shed.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -69,10 +72,6 @@ public class ShedController {
     @FXML
     Label gameTypeBackLbl;
 
-    // Java FX
-    private Stage stage;
-    private Scene scene;
-
     // Java Variables
 
     private Deck drawPile;
@@ -83,13 +82,17 @@ public class ShedController {
 
     private Hand currentHand;
 
-    private GameType gameType;
+    public GameType gameType;
 
     private int roundNum;
 
     private double startDragX;
 
     private double startDragY;
+
+    public ShedController() {
+        System.out.println("Here");
+    }
 
     @FXML
     private void initialize() {
@@ -100,7 +103,7 @@ public class ShedController {
         this.players.add(new Player("John", true));
         roundNum = 1;
 
-        String gameTypeStr = gameTypeFrontLbl.getText();
+        String gameTypeStr = gameType.toString();
 
         if(gameTypeStr.contains("Fast")) {
             if(gameTypeStr.contains("Basic")) {
@@ -114,6 +117,11 @@ public class ShedController {
         } else {
             gameType = GameType.Regular;
         }
+
+        setGameTypeLbl(this.gameType);
+
+        gameLogTxt.setText(gameLogTxt.getText() + "\n" + "------------------------- Round " + roundNum + " -------------------------\n\n");
+        roundNum++;
 
         populateDecks();
         startGame();
@@ -158,14 +166,11 @@ public class ShedController {
                             generalHandPane.getChildren().clear();
                             generalHandPane.getChildren().add(winConfirmation);
                             altHandPane.getChildren().add(winConfirmation);
-                            //setCurrentState();
-                        } else if(cardToPlay.getValue() == 10) {
+                        } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
                             gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
-                            //setCurrentState();
                         } else {
                             cpuPlaysCard(players.get(1));
                             // Check if p2 wins!
-                            //setCurrentState();
                         }
                     } else {
                         if(currentHand.getHandType().equals(HandType.Hidden)) {
@@ -227,11 +232,13 @@ public class ShedController {
         }
 
         if(gameOver) {
+            VictoryScreenController victoryController = new VictoryScreenController();
+            victoryController.setGameType(this.gameType);
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("victory-screen.fxml"));
+            fxmlLoader.setController(victoryController);
 
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -449,9 +456,10 @@ public class ShedController {
 //            cardImg.setOnMousePressed(new EventHandler<MouseEvent>() {
 //                @Override
 //                public void handle(MouseEvent mouseEvent) {
+//                    CardImg newCard = cardImg;
 //                    startDragX = mouseEvent.getSceneX();
 //                    startDragY = mouseEvent.getSceneY();
-//                    mainStage.getChildren().add(cardImg);
+//                    mainStage.getChildren().add(newCard);
 //                    generalHandPane.getChildren().remove(cardImg);
 //                    cardImg.setX(startDragX);
 //                    cardImg.setY(startDragY);
@@ -529,6 +537,10 @@ public class ShedController {
     public void setGameTypeLbl(GameType gameType) {
         this.gameTypeBackLbl.setText(gameType.toString());
         this.gameTypeFrontLbl.setText(gameType.toString());
+    }
+
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 
 }

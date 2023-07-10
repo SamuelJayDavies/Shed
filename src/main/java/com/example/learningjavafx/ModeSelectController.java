@@ -47,14 +47,15 @@ public class ModeSelectController {
     }
 
     private void switchToShed(ActionEvent event, GameType gameType) throws IOException {
+        ShedController shedController = new ShedController();
+        shedController.setGameType(gameType);
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("shed.fxml"));
+        fxmlLoader.setController(shedController);
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
         scene = new Scene(fxmlLoader.load());
         stage.setTitle("Shed: Basic");
-
-        ShedController shedController = fxmlLoader.getController();
-        shedController.setGameTypeLbl(gameType);
 
         stage.setScene(scene);
         stage.show();

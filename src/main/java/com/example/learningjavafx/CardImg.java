@@ -40,10 +40,6 @@ public class CardImg extends ImageView {
         this.setY(10);
     }
 
-    private void setOnMouseClicked(MouseEvent event) {
-        System.out.println(getCard());
-    }
-
     private void cardOnDragged() {
         System.out.println("Card Selected");
 
@@ -52,6 +48,11 @@ public class CardImg extends ImageView {
         ClipboardContent content = new ClipboardContent();
         content.putString(this.card.toString());
         db.setContent(content);
+
+        ImageView dragImage = new ImageView(this.getImage());
+        dragImage.setFitHeight(150);
+        dragImage.setFitWidth(100);
+        content.putImage(dragImage.snapshot(null, null));
     }
 
     public Card getCard() {
