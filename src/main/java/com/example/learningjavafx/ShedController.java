@@ -86,6 +86,8 @@ public class ShedController {
 
     private int roundNum;
 
+    private ArrayList<Card> selectedCards;
+
     private double startDragX;
 
     private double startDragY;
@@ -101,6 +103,7 @@ public class ShedController {
         players = new ArrayList<>();
         this.players.add(new Player("Sam", false));
         this.players.add(new Player("John", true));
+        this.selectedCards = new ArrayList<>();
         roundNum = 1;
 
         String gameTypeStr = gameType.toString();
@@ -159,7 +162,16 @@ public class ShedController {
                     Card cardToPlay = currentHand.getCardByString(dragEvent.getDragboard().getString());
                     System.out.println(cardToPlay);
                     if(isCardPlayable(cardToPlay)) {
-                        playCard(cardToPlay, currentHand, players.get(0));
+                        playCard(cardToPlay, currentHand, p1);
+                        if(gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast)) {
+                            if(selectedCards.size() >= 2) {
+                                selectedCards.remove(0);
+                                for(int i=0; i<selectedCards.size(); i++) {
+                                    playCard(selectedCards.get(i), currentHand, p1);
+                                }
+                                selectedCards.clear();
+                            }
+                        }
                         if(hasWon(p1)) {
                             // Add confirmation of victory here
                             Label winConfirmation = new Label("You won, click continue to play again or return to the menu");
@@ -386,7 +398,7 @@ public class ShedController {
 
         if (cardToPlay.getValue() == 10) {
             discardPile.empty();
-            System.out.println("Discard deck has been cleared\n");
+            gameLogTxt.setText(gameLogTxt.getText() + "Discard deck has been cleared\n");
             discardPileImg.setImage(null);
             // Add ability to play another card here
         }
@@ -453,6 +465,12 @@ public class ShedController {
                 cardImg.setImage(cardImg.getCard().getCardBack());
             }
 
+            if(selectedCards.size() >= 2) {
+                if(cardImg.getCard().getValue() == selectedCards.get(0).getValue()) {
+                    cardImg.setImage(cardImg.getCard().getCardBack());
+                }
+            }
+
 //            cardImg.setOnMousePressed(new EventHandler<MouseEvent>() {
 //                @Override
 //                public void handle(MouseEvent mouseEvent) {
@@ -486,6 +504,50 @@ public class ShedController {
 //            });
 
 
+            if(gameType.equals(GameType.RegularFast) || gameType.equals(GameType.Regular)) {
+                cardImg.setOnDragOver(new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent dragEvent) {
+                        if(dragEvent.getGestureSource() != cardImg && dragEvent.getDragboard().hasString()) {
+                            dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                        }
+                    }
+                });
+                cardImg.setOnDragDropped(new EventHandler<DragEvent>() {
+                    @Override
+                    public void handle(DragEvent dragEvent) {
+                        System.out.println("Test");
+                        if(dragEvent.getGestureSource() != cardImg && dragEvent.getDragboard().hasString()) {
+                            if(selectedCards.get(0).getValue() == cardImg.getCard().getValue()) {
+                                selectedCards.add(cardImg.getCard());
+                                currentHand.removeCard(cardImg.getCard());
+                                setCurrentState();
+                            }
+                            dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                        }
+                    }
+                });
+
+                cardImg.setOnDragDetected(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        if(selectedCards.size() <= 1) {
+                            selectedCards.clear();
+                            selectedCards.add(cardImg.getCard());
+                        }
+
+                        System.out.println("Card Selected");
+
+                        Dragboard db = cardImg.startDragAndDrop(TransferMode.ANY);
+
+                        ClipboardContent content = new ClipboardContent();
+                        content.putString(cardImg.getCard().toString());
+                        content.putImage(cardImg.getCard().getSnapShot());
+                        db.setContent(content);
+                    }
+                });
+            }
+
             int cardOffset = 20;
             double middleOfWindow = workingPane.getPrefWidth() / 2;
             int totalCardOffset = (i - 1) * cardOffset;
@@ -517,7 +579,6 @@ public class ShedController {
             cardImg.setX(middleOfWindow - (((cardImg.getFitWidth()) + totalCardOffset) / 2) + (j * cardOffset) + (10 + j*10));
             cardImg.setY(10);
             list.add(cardImg);
-
         }
 
         int j = constrainedCards.size();

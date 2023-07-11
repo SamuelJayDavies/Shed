@@ -1,9 +1,13 @@
 package com.example.learningjavafx;
 
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import shed.Card;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class CardImg extends ImageView {
 
@@ -23,12 +27,7 @@ public class CardImg extends ImageView {
 
        this.setOnDragDetected(mouseEvent -> cardOnDragged());
 
-       this.setOnMouseDragged(new EventHandler<MouseEvent>() {
-           @Override
-           public void handle(MouseEvent mouseEvent) {
-               mouseEvent.setDragDetect(true);
-           }
-       });
+       this.setOnMouseDragged(mouseEvent -> mouseEvent.setDragDetect(true));
 
     }
 
@@ -47,12 +46,8 @@ public class CardImg extends ImageView {
 
         ClipboardContent content = new ClipboardContent();
         content.putString(this.card.toString());
+        content.putImage(this.getCard().getSnapShot());
         db.setContent(content);
-
-        ImageView dragImage = new ImageView(this.getImage());
-        dragImage.setFitHeight(150);
-        dragImage.setFitWidth(100);
-        content.putImage(dragImage.snapshot(null, null));
     }
 
     public Card getCard() {

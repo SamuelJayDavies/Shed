@@ -33,6 +33,8 @@ public class Card {
 
     private final Image image;
 
+    private final Image snapShot;
+
     /**
      * Creates a card and assigns its cardName.
      * @param value The integer value of the card.
@@ -47,6 +49,8 @@ public class Card {
         try {
             FileInputStream stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\" + fileName);
             this.image = new Image(stream);
+            FileInputStream stream2 = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\" + fileName);
+            this.snapShot = new Image(stream2, 100, 150, false, true);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -78,6 +82,10 @@ public class Card {
 
     public Image getImage() {
         return this.image;
+    }
+
+    public Image getSnapShot() {
+        return this.snapShot;
     }
 
     public Image getCardBack() {
