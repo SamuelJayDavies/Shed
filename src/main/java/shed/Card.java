@@ -97,6 +97,15 @@ public class Card {
         }
     }
 
+    public Image getCardBackSnapShot() {
+        try {
+            FileInputStream stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\back_of_card.png");
+            return new Image(stream, 100, 150, false, true);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Returns a String representation of the card object.
      * @return A String representation of the card object.

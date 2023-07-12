@@ -180,6 +180,8 @@ public class ShedController {
                             altHandPane.getChildren().add(winConfirmation);
                         } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
                             gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
+                        }  else if (isLastCardsEqual()) {
+                            gameLogTxt.setText(gameLogTxt.getText() + "4 cards have been played, " + p1.getName() + " plays another card\n");
                         } else {
                             cpuPlaysCard(players.get(1));
                             // Check if p2 wins!
@@ -190,7 +192,6 @@ public class ShedController {
                             pickUpDiscardPile(players.get(0));
                             // Play it then pick it up??
                             cpuPlaysCard(players.get(1));
-                            //setCurrentState();
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Invalid Card");
@@ -216,6 +217,9 @@ public class ShedController {
             public void handle(MouseEvent mouseEvent) {
                 pickUpDiscardPile(players.get(0));
                 cpuPlaysCard(players.get(1));
+                if((gameType.equals(GameType.Regular) || gameType.equals(GameType.Basic)) && (!drawPile.isEmpty())) {
+                    preGameDraw();
+                }
                 setCurrentState();
             }
         });
@@ -233,6 +237,21 @@ public class ShedController {
                 receiveCards(player, cards);
             }
         }
+    }
+
+    private boolean isLastCardsEqual() {
+        ArrayList<Card> cards = discardPile.getCards();
+        int cardsSize = cards.size();
+        if(cardsSize >= 4) {
+            if(cards.get(cardsSize-1).getValue() == cards.get(cardsSize-2).getValue()
+                    && (cards.get(cardsSize-2).getValue() == cards.get(cardsSize-3).getValue())
+                    && (cards.get(cardsSize-3).getValue() == cards.get(cardsSize-4).getValue())) {
+
+                return true;
+
+            }
+        }
+        return false;
     }
 
     public void switchToVictoryScreen(ActionEvent event) throws IOException {
@@ -466,7 +485,7 @@ public class ShedController {
             }
 
             if(selectedCards.size() >= 2) {
-                if(cardImg.getCard().getValue() == selectedCards.get(0).getValue()) {
+                if(cardImg.getCard() == selectedCards.get(0)) {
                     cardImg.setImage(cardImg.getCard().getCardBack());
                 }
             }
@@ -534,6 +553,12 @@ public class ShedController {
                         if(selectedCards.size() <= 1) {
                             selectedCards.clear();
                             selectedCards.add(cardImg.getCard());
+                        } else {
+                            if(cardImg.getCard().getValue() != selectedCards.get(0).getValue()) {
+                                selectedCards.remove(0);
+                                players.get(0).addToGeneral(selectedCards);
+                                selectedCards.clear();
+                            }
                         }
 
                         System.out.println("Card Selected");
@@ -579,6 +604,20 @@ public class ShedController {
             cardImg.setX(middleOfWindow - (((cardImg.getFitWidth()) + totalCardOffset) / 2) + (j * cardOffset) + (10 + j*10));
             cardImg.setY(10);
             list.add(cardImg);
+
+            cardImg.setOnDragDetected(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("Card Selected");
+
+                    Dragboard db = cardImg.startDragAndDrop(TransferMode.ANY);
+
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString(cardImg.getCard().toString());
+                    content.putImage(cardImg.getCard().getCardBackSnapShot());
+                    db.setContent(content);
+                }
+            });
         }
 
         int j = constrainedCards.size();
