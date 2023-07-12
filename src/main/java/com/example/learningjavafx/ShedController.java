@@ -88,6 +88,8 @@ public class ShedController {
 
     private double startDragY;
 
+    private Image mysteryCardImg;
+
     public ShedController() {
         System.out.println("Here");
     }
@@ -124,6 +126,13 @@ public class ShedController {
 
         populateDecks();
         startGame();
+
+        try {
+            FileInputStream mysteryCardStream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\mysteryCard.png");
+            this.mysteryCardImg = new Image(mysteryCardStream);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         // Scene Related
         try {
@@ -306,7 +315,7 @@ public class ShedController {
             pickUpDiscardPile(player);
         }
 
-        if(canMultipleBePlayed(cpuCurrentHand, cpuCardToPlay)) {
+        if(cpuCardToPlay != null && canMultipleBePlayed(cpuCurrentHand, cpuCardToPlay)) {
             for (int i = cpuCurrentHand.getNumOfCards() - 1; i >= 0; i--) {
                 Card currentCard = cpuCurrentHand.getCard(i);
                 if (currentCard.getValue() == cpuCardToPlay.getValue()) {
@@ -527,7 +536,7 @@ public class ShedController {
 
             if(selectedCards.size() >= 2) {
                 if(cardImg.getCard() == selectedCards.get(0)) {
-                    cardImg.setImage(cardImg.getCard().getCardBack());
+                    cardImg.setImage(mysteryCardImg);
                 }
             }
 
