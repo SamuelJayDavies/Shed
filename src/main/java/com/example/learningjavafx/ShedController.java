@@ -306,16 +306,35 @@ public class ShedController {
             pickUpDiscardPile(player);
         }
 
-        if(cpuCardToPlay != null && cpuCardToPlay.getValue() == 10
+        if(canMultipleBePlayed(cpuCurrentHand, cpuCardToPlay)) {
+            for (int i = cpuCurrentHand.getNumOfCards() - 1; i >= 0; i--) {
+                Card currentCard = cpuCurrentHand.getCard(i);
+                if (currentCard.getValue() == cpuCardToPlay.getValue()) {
+                    playCard(currentCard, cpuCurrentHand, player);
+                }
+            }
+        }
+
+        if (cpuCardToPlay != null && cpuCardToPlay.getValue() == 10
                 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
             return false;
-        } else if(isLastCardsEqual()) {
+        } else if (isLastCardsEqual()) {
             return false;
         } else {
             gameLogTxt.setText(gameLogTxt.getText() + "\n" + "------------------------- Round " + roundNum + " -------------------------\n\n");
             roundNum++;
             return true;
         }
+    }
+
+    private boolean canMultipleBePlayed(Hand currentHand, Card previousCard) {
+        boolean multiple = false;
+        for(Card card: currentHand.getCards()) {
+            if(card.getValue() == previousCard.getValue()) {
+                multiple = true;
+            }
+        }
+        return multiple;
     }
 
     private Hand getCurrentHand(Player player) {
