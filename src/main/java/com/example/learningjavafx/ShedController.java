@@ -332,6 +332,7 @@ public class ShedController {
                 return false;
             } else if (isLastCardsEqual()) {
                 return false;
+
             }
         }
         gameLogTxt.setText(gameLogTxt.getText() + "\n" + "------------------------- Round " + roundNum + " -------------------------\n\n");
