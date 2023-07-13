@@ -7,46 +7,44 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: grey;" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ModeSelectController">
+<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="20.0" stylesheets="@homeStyle.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ModeSelectController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <children>
-      <BorderPane prefHeight="589.0" prefWidth="560.0">
-         <left>
-            <Pane id="welcomePane" prefHeight="560.0" prefWidth="250.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="678.0" prefWidth="560.0">
+         <children>
+            <Pane id="titlePane" prefHeight="78.0" prefWidth="220.0" style="-fx-border-color: black;">
                <children>
-                  <Label id="welcomeLbl" layoutX="11.0" layoutY="523.0" text="Please Select a Game Mode">
+                  <Label layoutX="6.0" text="Shed">
                      <font>
-                        <Font name="Georgia" size="19.0" />
+                        <Font name="Consolas" size="60.0" />
                      </font>
                   </Label>
-                  <Label id="welcomeLbl" layoutX="14.0" layoutY="14.0" text="Welcome To Shed">
+                  <Label text="Shed" textFill="WHITE">
                      <font>
-                        <Font name="Georgia" size="27.0" />
+                        <Font name="Consolas" size="60.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="71.0" fitWidth="67.0" layoutX="138.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../images/IconCards.png" />
                      </image>
                   </ImageView>
-               </children></Pane>
-         </left>
-         <right>
-            <Pane id="modeSelectPane" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+               </children>
+            </Pane>
+            <Pane layoutY="84.0" prefHeight="285.0" prefWidth="220.0" style="-fx-border-color: black;">
                <children>
-                  <Label id="welcomeLbl" layoutX="14.0" layoutY="14.0" text="Game Mode Select" textFill="WHITE">
-                     <font>
-                        <Font name="Georgia" size="27.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="higherOrLowerBtn" layoutX="74.0" layoutY="429.0" mnemonicParsing="false" onAction="#switchToHigherOrLower" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#switchToBasicShed" text="Basic" />
+                  <Button layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#switchToBasicFastShed" text="Basic Fast" />
+                  <Button layoutX="10.0" layoutY="90.0" mnemonicParsing="false" onAction="#switchToRegularShed" text="Regular" />
+                  <Button layoutX="10.0" layoutY="130.0" mnemonicParsing="false" onAction="#switchToRegularFastShed" text="Regular Fast" />
+                  <Button fx:id="higherOrLowerBtn" layoutX="10.0" layoutY="170.0" mnemonicParsing="false" onAction="#switchToHigherOrLower" text="Higher or Lower" textAlignment="CENTER" wrapText="true">
                      <effect>
                         <DropShadow radius="7.07" width="9.28" />
                      </effect>
@@ -54,12 +52,9 @@
                         <Cursor fx:constant="OPEN_HAND" />
                      </cursor>
                   </Button>
-                  <Button layoutX="104.0" layoutY="103.0" mnemonicParsing="false" onAction="#switchToBasicShed" text="Basic" />
-                  <Button layoutX="92.0" layoutY="189.0" mnemonicParsing="false" onAction="#switchToBasicFastShed" text="Basic Fast" />
-                  <Button layoutX="96.0" layoutY="261.0" mnemonicParsing="false" onAction="#switchToRegularShed" text="Regular" />
-                  <Button layoutX="85.0" layoutY="348.0" mnemonicParsing="false" onAction="#switchToRegularFastShed" text="Regular Fast" />
-               </children></Pane>
-         </right>
-      </BorderPane>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
    </children>
 </VBox>
