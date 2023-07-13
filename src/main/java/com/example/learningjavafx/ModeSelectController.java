@@ -7,18 +7,35 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import shed.GameType;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ModeSelectController {
 
     @FXML
     private Button higherOrLowerBtn;
 
+    @FXML
+    private ImageView iconPicImg;
+
     private Stage stage;
     private Scene scene;
+
+    @FXML
+    public void initialize() {
+        try{
+            InputStream stream = new FileInputStream("src\\images\\IconCards.png");
+            iconPicImg.setImage(new Image(stream));
+        }catch(IOException e) {
+            System.out.println("File not found");
+        }
+    }
 
     public void switchToHigherOrLower(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("higher-or-lower.fxml"));
@@ -55,7 +72,7 @@ public class ModeSelectController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Shed: Basic");
+        stage.setTitle("Shed: " + gameType.toString());
 
         stage.setScene(scene);
         stage.show();

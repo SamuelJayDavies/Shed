@@ -20,7 +20,7 @@ public class MainApplication extends Application {
 
         Scene scene = new Scene(fxmlLoader.load()); // One hierarchy lower than a stage
 
-        scene.getStylesheets().add("src\\main\\resources\\homeStyle.css");
+        //scene.getStylesheets().add("src\\main\\resources\\modeSelect.css");
 
         stage.setTitle("Shed: Mode Select");
 //        stage.setWidth(600);

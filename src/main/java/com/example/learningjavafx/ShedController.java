@@ -181,9 +181,11 @@ public class ShedController {
                         if(hasWon(p1)) {
                             // Add confirmation of victory here
                             Label winConfirmation = new Label("You won, click continue to play again or return to the menu");
-                            generalHandPane.getChildren().clear();
-                            generalHandPane.getChildren().add(winConfirmation);
-                            altHandPane.getChildren().add(winConfirmation);
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("You Won!");
+                            alert.setHeaderText("Congrats!");
+                            alert.setContentText("Click continue to play again or select a different game-mode");
+                            alert.showAndWait();
                         } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
                             gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
                         }  else if (isLastCardsEqual()) {
@@ -315,25 +317,26 @@ public class ShedController {
             pickUpDiscardPile(player);
         }
 
-        if(cpuCardToPlay != null && canMultipleBePlayed(cpuCurrentHand, cpuCardToPlay)) {
-            for (int i = cpuCurrentHand.getNumOfCards() - 1; i >= 0; i--) {
-                Card currentCard = cpuCurrentHand.getCard(i);
-                if (currentCard.getValue() == cpuCardToPlay.getValue()) {
-                    playCard(currentCard, cpuCurrentHand, player);
+        if(this.gameType.equals(GameType.Regular) || this.gameType.equals(GameType.RegularFast)) {
+            if(cpuCardToPlay != null && cpuCurrentHand.getHandType() != HandType.Hidden && canMultipleBePlayed(cpuCurrentHand, cpuCardToPlay)) {
+                for (int i = cpuCurrentHand.getNumOfCards() - 1; i >= 0; i--) {
+                    Card currentCard = cpuCurrentHand.getCard(i);
+                    if (currentCard.getValue() == cpuCardToPlay.getValue()) {
+                        playCard(currentCard, cpuCurrentHand, player);
+                    }
                 }
             }
-        }
 
-        if (cpuCardToPlay != null && cpuCardToPlay.getValue() == 10
-                && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
-            return false;
-        } else if (isLastCardsEqual()) {
-            return false;
-        } else {
-            gameLogTxt.setText(gameLogTxt.getText() + "\n" + "------------------------- Round " + roundNum + " -------------------------\n\n");
-            roundNum++;
-            return true;
+            if (cpuCardToPlay != null && cpuCardToPlay.getValue() == 10
+                    && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
+                return false;
+            } else if (isLastCardsEqual()) {
+                return false;
+            }
         }
+        gameLogTxt.setText(gameLogTxt.getText() + "\n" + "------------------------- Round " + roundNum + " -------------------------\n\n");
+        roundNum++;
+        return true;
     }
 
     private boolean canMultipleBePlayed(Hand currentHand, Card previousCard) {
@@ -419,6 +422,9 @@ public class ShedController {
         } else {
             discardPileImg.setImage(null);
         }
+
+        gameLogTxt.selectPositionCaret(gameLogTxt.getLength());
+        gameLogTxt.deselect();
     }
 
     private void setDiscardPileImg(ActionEvent event) {
