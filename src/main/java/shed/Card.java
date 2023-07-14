@@ -33,7 +33,7 @@ public class Card {
 
     private final Image image;
 
-    private final Image snapShot;
+    private Image snapShot;
 
     /**
      * Creates a card and assigns its cardName.
@@ -86,6 +86,10 @@ public class Card {
 
     public Image getSnapShot() {
         return this.snapShot;
+    }
+
+    public void setSnapShot(Image newImage) {
+        this.snapShot = newImage;
     }
 
     public Image getCardBack() {

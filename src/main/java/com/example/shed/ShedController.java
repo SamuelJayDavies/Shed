@@ -86,7 +86,9 @@ public class ShedController {
 
     private double startDragY;
 
-    private Image mysteryCardImg;
+    private ArrayList<Image> stackImgs;
+
+    private ArrayList<Image> stackSnapShotImgs;
 
     public ShedController() {
         System.out.println("Here");
@@ -100,6 +102,8 @@ public class ShedController {
         this.players.add(new Player("Sam", false));
         this.players.add(new Player("John", true));
         this.selectedCards = new ArrayList<>();
+        this.stackImgs = new ArrayList<>();
+        this.stackSnapShotImgs = new ArrayList<>();
         roundNum = 1;
 
         String gameTypeStr = gameType.toString();
@@ -126,8 +130,18 @@ public class ShedController {
         startGame();
 
         try {
-            FileInputStream mysteryCardStream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\mysteryCard.png");
-            this.mysteryCardImg = new Image(mysteryCardStream);
+            FileInputStream stack2Stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\stack2.png");
+            stackImgs.add(new Image(stack2Stream));
+            FileInputStream stack3Stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\stack3.png");
+            stackImgs.add(new Image(stack3Stream));
+            FileInputStream stack4Stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\stack4.png");
+            stackImgs.add(new Image(stack4Stream));
+            FileInputStream stackSnap2Stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\stack2.png");
+            stackSnapShotImgs.add(new Image(stackSnap2Stream, 100, 150, false, true));
+            FileInputStream stackSnap3Stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\stack3.png");
+            stackSnapShotImgs.add(new Image(stackSnap3Stream, 100, 150, false, true));
+            FileInputStream stackSnap4Stream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\stack4.png");
+            stackSnapShotImgs.add(new Image(stackSnap4Stream, 100, 150, false, true));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -196,6 +210,7 @@ public class ShedController {
                         if(currentHand.getHandType().equals(HandType.Hidden)) {
                             playCard(cardToPlay, currentHand, players.get(0));
                             pickUpDiscardPile(players.get(0));
+                            selectedCards.clear();
                             // Play it then pick it up??
                             cpuTurn();
                         } else {
@@ -541,7 +556,8 @@ public class ShedController {
 
             if(selectedCards.size() >= 2) {
                 if(cardImg.getCard() == selectedCards.get(0)) {
-                    cardImg.setImage(mysteryCardImg);
+                    cardImg.setImage(stackImgs.get(selectedCards.size()-2));
+                    cardImg.getCard().setSnapShot(stackSnapShotImgs.get(selectedCards.size()-2));
                 }
             }
 
