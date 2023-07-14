@@ -1,13 +1,8 @@
-package com.example.learningjavafx;
+package com.example.shed;
 
-import javafx.event.EventHandler;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import shed.Card;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 public class CardImg extends ImageView {
 

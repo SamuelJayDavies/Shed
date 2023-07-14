@@ -4,8 +4,8 @@ module com.example.learningjavafx {
 
     requires com.dlsc.formsfx;
 
-    opens com.example.learningjavafx to javafx.fxml;
-    exports com.example.learningjavafx;
+    opens com.example.shed to javafx.fxml;
+    exports com.example.shed;
     exports higherOrLower;
     opens higherOrLower to javafx.fxml;
 }

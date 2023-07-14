@@ -1,4 +1,4 @@
-package com.example.learningjavafx;
+package com.example.shed;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="498.0" spacing="20.0" stylesheets="@modeSelect.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.learningjavafx.ModeSelectController">
+<VBox id="mainBackgroundVBox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="498.0" spacing="20.0" stylesheets="@modeSelect.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.shed.ModeSelectController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -58,7 +58,7 @@
                <children>
                   <ImageView id="playerProfileImg" fitHeight="113.0" fitWidth="101.0" layoutX="71.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="file:/C:/Users/samjd/!IntelliJ%20Projects/LearningJavaFX/src/images/profilePicture.png" />
+                        <Image url="file:/C:/Users/samjd/!IntelliJ%20Projects/Shed/src/images/profilePicture.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="playerNameLbl" alignment="CENTER" layoutX="71.0" layoutY="116.0" prefHeight="17.0" prefWidth="101.0" text="Guest" textFill="WHITE" />

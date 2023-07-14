@@ -1,6 +1,5 @@
-package com.example.learningjavafx;
+package com.example.shed;
 
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import shed.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

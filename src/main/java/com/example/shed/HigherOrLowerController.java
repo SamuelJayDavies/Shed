@@ -1,9 +1,8 @@
-package com.example.learningjavafx;
+package com.example.shed;
 
 import higherOrLower.Card;
 import higherOrLower.HigherOrLowerGame;
 import javafx.animation.PauseTransition;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +18,6 @@ import javafx.util.Duration;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class HigherOrLowerController {
 
