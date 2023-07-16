@@ -249,6 +249,13 @@ public class ShedController {
             public void handle(MouseEvent mouseEvent) {
                 pickUpDiscardPile(players.get(0));
                 cpuTurn();
+                if(hasWon(players.get(1))) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("You Lost!");
+                    alert.setHeaderText("Unlucky!");
+                    alert.setContentText("Click continue to try again or select a different game-mode");
+                    alert.showAndWait();
+                }
                 if((gameType.equals(GameType.Regular) || gameType.equals(GameType.Basic)) && (!drawPile.isEmpty())) {
                     preGameDraw();
                 }
