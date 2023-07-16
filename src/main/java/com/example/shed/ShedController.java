@@ -191,8 +191,6 @@ public class ShedController {
                         }
 
                         if(hasWon(p1)) {
-                            // Add confirmation of victory here
-                            Label winConfirmation = new Label("You won, click continue to play again or return to the menu");
                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                             alert.setTitle("You Won!");
                             alert.setHeaderText("Congrats!");
@@ -204,7 +202,13 @@ public class ShedController {
                             gameLogTxt.setText(gameLogTxt.getText() + "4 cards have been played, " + p1.getName() + " plays another card\n");
                         } else {
                             cpuTurn();
-                            // Check if p2 wins!
+                            if(hasWon(players.get(1))) {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("You Lost!");
+                                alert.setHeaderText("Unlucky!");
+                                alert.setContentText("Click continue to try again or select a different game-mode");
+                                alert.showAndWait();
+                            }
                         }
                     } else {
                         if(currentHand.getHandType().equals(HandType.Hidden)) {
@@ -213,6 +217,13 @@ public class ShedController {
                             selectedCards.clear();
                             // Play it then pick it up??
                             cpuTurn();
+                            if(hasWon(players.get(1))) {
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("You Lost!");
+                                alert.setHeaderText("Unlucky!");
+                                alert.setContentText("Click continue to try again or select a different game-mode");
+                                alert.showAndWait();
+                            }
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Invalid Card");
@@ -477,7 +488,7 @@ public class ShedController {
 
         gameLogTxt.setText(gameLogTxt.getText() + player.getName() + " has played " + cardToPlay + "\n");
 
-        if (cardToPlay.getValue() == 10) {
+        if (cardToPlay.getValue() == 10 || isLastCardsEqual()) {
             discardPile.empty();
             gameLogTxt.setText(gameLogTxt.getText() + "Discard deck has been cleared\n");
             discardPileImg.setImage(null);
