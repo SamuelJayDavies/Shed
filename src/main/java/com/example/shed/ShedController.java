@@ -191,14 +191,16 @@ public class ShedController {
                         }
 
                         if(hasWon(p1)) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("You Won!");
-                            alert.setHeaderText("Congrats!");
-                            alert.setContentText("Click continue to play again or select a different game-mode");
-                            alert.showAndWait();
+                            switchToVictoryScreen();
+//                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//                            alert.setTitle("You Won!");
+//                            alert.setHeaderText("Congrats!");
+//                            alert.setContentText("Click continue to play again or select a different game-mode");
+//                            alert.showAndWait();
                         } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
                             gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
                         }  else if (isLastCardsEqual()) {
+                            clearDeck();
                             gameLogTxt.setText(gameLogTxt.getText() + "4 cards have been played, " + p1.getName() + " plays another card\n");
                         } else {
                             cpuTurn();
@@ -208,6 +210,7 @@ public class ShedController {
                                 alert.setHeaderText("Unlucky!");
                                 alert.setContentText("Click continue to try again or select a different game-mode");
                                 alert.showAndWait();
+                                setCurrentState();
                             }
                         }
                     } else {
@@ -293,7 +296,7 @@ public class ShedController {
         return false;
     }
 
-    public void switchToVictoryScreen(ActionEvent event) throws IOException {
+    public void switchToVictoryScreen() {
         boolean gameOver = false;
         for(Player player: players) {
             if(hasWon(player)) {
@@ -307,8 +310,12 @@ public class ShedController {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("victory-screen.fxml"));
             fxmlLoader.setController(victoryController);
 
-            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(fxmlLoader.load()));
+            Stage stage = new Stage();
+            try {
+                stage.setScene(new Scene(fxmlLoader.load()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             stage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -495,12 +502,15 @@ public class ShedController {
 
         gameLogTxt.setText(gameLogTxt.getText() + player.getName() + " has played " + cardToPlay + "\n");
 
-        if (cardToPlay.getValue() == 10 || isLastCardsEqual()) {
-            discardPile.empty();
-            gameLogTxt.setText(gameLogTxt.getText() + "Discard deck has been cleared\n");
-            discardPileImg.setImage(null);
-            // Add ability to play another card here
+        if (cardToPlay.getValue() == 10) {
+            clearDeck();
         }
+    }
+
+    private void clearDeck() {
+        discardPile.empty();
+        gameLogTxt.setText(gameLogTxt.getText() + "Discard deck has been cleared\n");
+        discardPileImg.setImage(null);
     }
 
     private void cpuTurn() {
@@ -578,39 +588,6 @@ public class ShedController {
                     cardImg.getCard().setSnapShot(stackSnapShotImgs.get(selectedCards.size()-2));
                 }
             }
-
-//            cardImg.setOnMousePressed(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent mouseEvent) {
-//                    CardImg newCard = cardImg;
-//                    startDragX = mouseEvent.getSceneX();
-//                    startDragY = mouseEvent.getSceneY();
-//                    mainStage.getChildren().add(newCard);
-//                    generalHandPane.getChildren().remove(cardImg);
-//                    cardImg.setX(startDragX);
-//                    cardImg.setY(startDragY);
-//                }
-//            });
-//
-//            cardImg.setOnMouseReleased(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent mouseEvent) {
-//                    generalHandPane.getChildren().add(cardImg);
-//                    mainStage.getChildren().remove(cardImg);
-//                    cardImg.setX(startDragX);
-//                    cardImg.setY(startDragY);
-//                }
-//            });
-//
-//            cardImg.setOnMouseDragged(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent mouseEvent) {
-//                    cardImg.setTranslateX(mouseEvent.getSceneX() - startDragX);
-//                    cardImg.setTranslateY(mouseEvent.getSceneY() - startDragY);
-//
-//                }
-//            });
-
 
             if(gameType.equals(GameType.RegularFast) || gameType.equals(GameType.Regular)) {
                 cardImg.setOnDragOver(new EventHandler<DragEvent>() {

@@ -66,7 +66,7 @@
             <Pane layoutX="14.0" layoutY="13.0" prefHeight="200.0" prefWidth="359.0" style="-fx-border-color: black;">
                <children>
                   <Label layoutX="153.0" layoutY="14.0" text="Game Log" textFill="WHITE" />
-                  <TextArea fx:id="gameLogTxt" editable="false" layoutX="14.0" layoutY="41.0" prefHeight="145.0" prefWidth="331.0" style="-fx-text-fill: red; -fx-background-color: red;" text="Welcome To Shed&#10;&#10;&#10;" />
+                  <TextArea id="gameLogBox" fx:id="gameLogTxt" editable="false" layoutX="14.0" layoutY="41.0" prefHeight="145.0" prefWidth="331.0" text="Welcome To Shed&#10;&#10;&#10;" />
                </children>
             </Pane>
             <Pane layoutX="749.0" layoutY="13.0" prefHeight="200.0" prefWidth="212.0" style="-fx-border-color: black;">
