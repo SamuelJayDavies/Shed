@@ -36,7 +36,7 @@ public class VictoryScreenController {
 
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Shed: Basic");
+        stage.setTitle("Shed: " + gameType.toString());
         stage.setScene(scene);
         stage.show();
     }

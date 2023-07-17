@@ -192,11 +192,6 @@ public class ShedController {
 
                         if(hasWon(p1)) {
                             switchToVictoryScreen();
-//                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//                            alert.setTitle("You Won!");
-//                            alert.setHeaderText("Congrats!");
-//                            alert.setContentText("Click continue to play again or select a different game-mode");
-//                            alert.showAndWait();
                         } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
                             gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
                         }  else if (isLastCardsEqual()) {

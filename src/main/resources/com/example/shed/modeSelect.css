@@ -15,11 +15,17 @@
     -fx-background-radius: 0 30 30 0;
 }
 
+#noBtn,
+ #yesBtn,
+   #returnBtn{
+     -fx-background-radius: 30 30 30 30;
+}
+
+#helpBtn {
+    -fx-background-radius: 30 0 0 30;
+}
+
 .button:hover {
     -fx-background-color: "white";
     -fx-text-fill: "black";
-}
-
-.button:pressed {
-    -fx-text-fill: "white";
 }

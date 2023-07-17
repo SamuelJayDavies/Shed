@@ -77,4 +77,14 @@ public class ModeSelectController {
         stage.show();
     }
 
+    public void switchToHelpScreen(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("help-screen.fxml"));
+
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Shed: Help Screen");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }

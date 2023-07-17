@@ -6,9 +6,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="272.0" prefWidth="600.0" stylesheets="@modeSelect.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="272.0" prefWidth="631.0" stylesheets="@modeSelect.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="14.0" layoutY="88.0" prefHeight="79.0" prefWidth="572.0">
          <children>
@@ -26,8 +27,8 @@
       </Pane>
       <Pane layoutX="14.0" layoutY="175.0" prefHeight="79.0" prefWidth="572.0">
          <children>
-            <Button fx:id="noBtn" layoutX="301.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchToModeSelect" prefHeight="54.0" prefWidth="107.0" text="No" />
-            <Button fx:id="yesBtn" layoutX="179.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchToShed" prefHeight="54.0" prefWidth="107.0" text="Yes" />
+            <Button id="noBtn" fx:id="noBtn" layoutX="301.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchToModeSelect" prefHeight="54.0" prefWidth="107.0" text="No" />
+            <Button id="yesBtn" fx:id="yesBtn" layoutX="179.0" layoutY="13.0" mnemonicParsing="false" onAction="#switchToShed" prefHeight="54.0" prefWidth="107.0" text="Yes" />
          </children>
       </Pane>
       <Pane id="titlePane" layoutX="10.0" layoutY="10.0" prefHeight="78.0" prefWidth="220.0">
@@ -42,12 +43,23 @@
                   <Font name="Consolas" size="60.0" />
                </font>
             </Label>
-            <ImageView id="profilePicImg" fx:id="iconPicImg" fitHeight="71.0" fitWidth="67.0" layoutX="138.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="profilePicImg" fx:id="iconPicImg" fitHeight="71.0" fitWidth="67.0" layoutX="144.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../images/IconCards.png" />
+                  <Image url="file:/C:/Users/samjd/!IntelliJ%20Projects/Shed/src/images/IconCards.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="71.0" layoutX="610.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="15.0" />
+      <Label layoutX="370.0" layoutY="10.0" text="Endgame">
+         <font>
+            <Font name="Consolas" size="60.0" />
+         </font>
+      </Label>
+      <Label layoutX="364.0" layoutY="10.0" text="Endgame" textFill="WHITE">
+         <font>
+            <Font name="Consolas" size="60.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

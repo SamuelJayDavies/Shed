@@ -60,6 +60,11 @@
                   <Label fx:id="playerNameLbl" alignment="CENTER" layoutX="71.0" layoutY="116.0" prefHeight="17.0" prefWidth="101.0" text="Guest" textFill="WHITE" />
                </children>
             </Pane>
+            <Button id="helpBtn" fx:id="helpBtn" layoutX="417.0" layoutY="269.0" mnemonicParsing="false" onAction="#switchToHelpScreen" text="Help" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
    </children>
