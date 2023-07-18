@@ -213,7 +213,7 @@ public class ShedController {
                             playCard(cardToPlay, currentHand, players.get(0));
                             pickUpDiscardPile(players.get(0));
                             selectedCards.clear();
-                            // Play it then pick it up??
+                            currentHand = getCurrentHand(p1);
                             cpuTurn();
                             if(hasWon(players.get(1))) {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -311,6 +311,7 @@ public class ShedController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            stage.setTitle("Shed: Endgame");
             stage.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
