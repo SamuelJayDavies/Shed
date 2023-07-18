@@ -6,9 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import shed.GameType;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class VictoryScreenController {
@@ -21,6 +25,12 @@ public class VictoryScreenController {
 
     @FXML
     private Button noBtn;
+
+    @FXML
+    private Label messageFrontLbl;
+
+    @FXML
+    private Label messageBackLbl;
 
     private Stage stage;
 
@@ -37,6 +47,12 @@ public class VictoryScreenController {
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(fxmlLoader.load());
         stage.setTitle("Shed: " + gameType.toString());
+        try {
+            FileInputStream stream = new FileInputStream("src\\images\\IconCards.png");
+            stage.getIcons().add(new Image(stream));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         stage.setScene(scene);
         stage.show();
     }
@@ -49,6 +65,11 @@ public class VictoryScreenController {
         stage.setTitle("Shed: Home");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setMessageLbl(String message) {
+        this.messageFrontLbl.setText(message);
+        this.messageBackLbl.setText(message);
     }
 
     public void setGameType(GameType gameType) {

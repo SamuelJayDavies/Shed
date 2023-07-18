@@ -200,12 +200,7 @@ public class ShedController {
                         } else {
                             cpuTurn();
                             if(hasWon(players.get(1))) {
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("You Lost!");
-                                alert.setHeaderText("Unlucky!");
-                                alert.setContentText("Click continue to try again or select a different game-mode");
-                                alert.showAndWait();
-                                setCurrentState();
+                                switchToVictoryScreen();
                             }
                         }
                     } else {
@@ -216,11 +211,7 @@ public class ShedController {
                             currentHand = getCurrentHand(p1);
                             cpuTurn();
                             if(hasWon(players.get(1))) {
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("You Lost!");
-                                alert.setHeaderText("Unlucky!");
-                                alert.setContentText("Click continue to try again or select a different game-mode");
-                                alert.showAndWait();
+                                switchToVictoryScreen();
                             }
                         } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -248,11 +239,7 @@ public class ShedController {
                 pickUpDiscardPile(players.get(0));
                 cpuTurn();
                 if(hasWon(players.get(1))) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("You Lost!");
-                    alert.setHeaderText("Unlucky!");
-                    alert.setContentText("Click continue to try again or select a different game-mode");
-                    alert.showAndWait();
+                    switchToVictoryScreen();
                 }
                 if((gameType.equals(GameType.Regular) || gameType.equals(GameType.Basic)) && (!drawPile.isEmpty())) {
                     preGameDraw();
@@ -293,9 +280,13 @@ public class ShedController {
 
     public void switchToVictoryScreen() {
         boolean gameOver = false;
+        boolean playerWon = false;
         for(Player player: players) {
             if(hasWon(player)) {
                 gameOver = true;
+                if(player.equals(players.get(0))) {
+                    playerWon = true;
+                }
             }
         }
 
@@ -311,8 +302,15 @@ public class ShedController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            try {
+                FileInputStream stream = new FileInputStream("src\\images\\IconCards.png");
+                stage.getIcons().add(new Image(stream));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             stage.setTitle("Shed: Endgame");
             stage.show();
+            victoryController.setMessageLbl(playerWon ? "Congrats on the win. Do you want to play again?" : "Unlucky on the loss. Do you want to play again?");
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Game is not over");
@@ -510,10 +508,11 @@ public class ShedController {
     }
 
     private void cpuTurn() {
-        boolean cpuTurnOver = cpuPlaysCard(players.get(1));
-        while(!cpuTurnOver) {
-            gameLogTxt.setText(gameLogTxt.getText() + players.get(1).getName() + " plays another card\n");
-            cpuTurnOver = cpuPlaysCard(players.get(1));
+        Player p2 = players.get(1);
+        boolean cpuTurnOver = cpuPlaysCard(p2);
+        while(!cpuTurnOver && hasWon(p2)) {
+            gameLogTxt.setText(gameLogTxt.getText() + p2.getName() + " plays another card\n");
+            cpuTurnOver = cpuPlaysCard(p2);
         }
     }
 
