@@ -91,7 +91,7 @@ public class ShedController {
     private ArrayList<Image> stackSnapShotImgs;
 
     public ShedController() {
-        System.out.println("Here");
+
     }
 
     @FXML
@@ -174,57 +174,7 @@ public class ShedController {
             public void handle(DragEvent dragEvent) {
                 Dragboard db = dragEvent.getDragboard();
                 if(db.hasString()) {
-                    Player p1 = players.get(0);
-                    currentHand = getCurrentHand(p1);
-                    Card cardToPlay = currentHand.getCardByString(dragEvent.getDragboard().getString());
-                    System.out.println(cardToPlay);
-                    if(isCardPlayable(cardToPlay)) {
-                        playCard(cardToPlay, currentHand, p1);
-                        if(gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast)) {
-                            if(selectedCards.size() >= 2) {
-                                selectedCards.remove(0);
-                                for(int i=0; i<selectedCards.size(); i++) {
-                                    playCard(selectedCards.get(i), currentHand, p1);
-                                }
-                                selectedCards.clear();
-                            }
-                        }
-
-                        if(hasWon(p1)) {
-                            switchToVictoryScreen();
-                        } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
-                            gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
-                        }  else if (isLastCardsEqual()) {
-                            clearDeck();
-                            gameLogTxt.setText(gameLogTxt.getText() + "4 cards have been played, " + p1.getName() + " plays another card\n");
-                        } else {
-                            cpuTurn();
-                            if(hasWon(players.get(1))) {
-                                switchToVictoryScreen();
-                            }
-                        }
-                    } else {
-                        if(currentHand.getHandType().equals(HandType.Hidden)) {
-                            playCard(cardToPlay, currentHand, players.get(0));
-                            pickUpDiscardPile(players.get(0));
-                            selectedCards.clear();
-                            currentHand = getCurrentHand(p1);
-                            cpuTurn();
-                            if(hasWon(players.get(1))) {
-                                switchToVictoryScreen();
-                            }
-                        } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Invalid Card");
-                            alert.setHeaderText("The card you played was invalid");
-                            alert.setContentText("Please try another card");
-                            alert.showAndWait();
-                        }
-                    }
-                    if((gameType.equals(GameType.Regular) || gameType.equals(GameType.Basic)) && (!drawPile.isEmpty())) {
-                        preGameDraw();
-                    }
-                    setCurrentState();
+                    playTurn(dragEvent.getDragboard().getString());
                     dragEvent.setDropCompleted(true);
                 } else {
                     dragEvent.setDropCompleted(false);
@@ -247,6 +197,60 @@ public class ShedController {
                 setCurrentState();
             }
         });
+    }
+
+    private void playTurn(String cardString) {
+        Player p1 = players.get(0);
+        currentHand = getCurrentHand(p1);
+        Card cardToPlay = currentHand.getCardByString(cardString);
+        System.out.println(cardToPlay);
+        if(isCardPlayable(cardToPlay)) {
+            playCard(cardToPlay, currentHand, p1);
+            if(gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast)) {
+                if(selectedCards.size() >= 2) {
+                    selectedCards.remove(0);
+                    for(int i=0; i<selectedCards.size(); i++) {
+                        playCard(selectedCards.get(i), currentHand, p1);
+                    }
+                    selectedCards.clear();
+                }
+            }
+
+            if(hasWon(p1)) {
+                switchToVictoryScreen();
+            } else if(cardToPlay.getValue() == 10 && (gameType.equals(GameType.Regular) || gameType.equals(GameType.RegularFast))) {
+                gameLogTxt.setText(gameLogTxt.getText() + p1.getName() + " plays another card\n");
+            }  else if (isLastCardsEqual()) {
+                clearDeck();
+                gameLogTxt.setText(gameLogTxt.getText() + "4 cards have been played, " + p1.getName() + " plays another card\n");
+            } else {
+                cpuTurn();
+                if(hasWon(players.get(1))) {
+                    switchToVictoryScreen();
+                }
+            }
+        } else {
+            if(currentHand.getHandType().equals(HandType.Hidden)) {
+                playCard(cardToPlay, currentHand, players.get(0));
+                pickUpDiscardPile(players.get(0));
+                selectedCards.clear();
+                currentHand = getCurrentHand(p1);
+                cpuTurn();
+                if(hasWon(players.get(1))) {
+                    switchToVictoryScreen();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Invalid Card");
+                alert.setHeaderText("The card you played was invalid");
+                alert.setContentText("Please try another card");
+                alert.showAndWait();
+            }
+        }
+        if((gameType.equals(GameType.Regular) || gameType.equals(GameType.Basic)) && (!drawPile.isEmpty())) {
+            preGameDraw();
+        }
+        setCurrentState();
     }
 
     private void preGameDraw() {
@@ -510,7 +514,7 @@ public class ShedController {
     private void cpuTurn() {
         Player p2 = players.get(1);
         boolean cpuTurnOver = cpuPlaysCard(p2);
-        while(!cpuTurnOver && hasWon(p2)) {
+        while(!cpuTurnOver && !hasWon(p2)) {
             gameLogTxt.setText(gameLogTxt.getText() + p2.getName() + " plays another card\n");
             cpuTurnOver = cpuPlaysCard(p2);
         }
