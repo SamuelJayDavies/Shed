@@ -33,7 +33,7 @@
                         <Image url="@../../../../../images/profilePicture.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="72.0" layoutY="172.0" text="Player Name" textFill="WHITE" />
+                  <Label fx:id="p1NameLbl" alignment="CENTER" layoutX="-1.0" layoutY="172.0" prefHeight="17.0" prefWidth="212.0" text="Player Name" textFill="WHITE" />
                </children></Pane>
          </children>
       </AnchorPane>

@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
@@ -16,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class ModeSelectController {
 
@@ -28,6 +31,13 @@ public class ModeSelectController {
     @FXML
     private ImageView profilePicImg;
 
+    @FXML
+    private Label playerNameLbl;
+
+    private String p1Name;
+
+    private Image defaultProfilePic;
+
     private Stage stage;
     private Scene scene;
 
@@ -36,9 +46,13 @@ public class ModeSelectController {
         try{
             InputStream stream = new FileInputStream("src\\images\\IconCards.png");
             iconPicImg.setImage(new Image(stream));
+            InputStream profileStream = new FileInputStream("src\\images\\profilePicture.png");
+            defaultProfilePic = new Image(profileStream);
         }catch(IOException e) {
             System.out.println("File not found");
         }
+
+        this.p1Name = "Player 1";
     }
 
     public void switchToHigherOrLower(ActionEvent event) throws IOException {
@@ -71,6 +85,7 @@ public class ModeSelectController {
         ShedController shedController = new ShedController();
         shedController.setGameType(gameType);
         shedController.setP1profilePic(profilePicImg.getImage());
+        shedController.setP1Name(p1Name);
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("shed.fxml"));
         fxmlLoader.setController(shedController);
 
@@ -99,12 +114,28 @@ public class ModeSelectController {
         if(selectedPicture != null) {
             try{
                 InputStream stream = new FileInputStream(selectedPicture);
-                profilePicImg.setImage(new Image(stream));
+                Image newProfilePic = new Image(stream);
+                if(newProfilePic.getHeight() == 0) {
+                    newProfilePic = defaultProfilePic;
+                }
+                profilePicImg.setImage(newProfilePic);
             }catch(IOException e) {
                 // Change this to use ALERT
                 System.out.println("Please select an image");
             }
         }
+    }
+
+    public void setName() {
+        TextInputDialog textBox = new TextInputDialog();
+        textBox.setHeaderText("Please enter your name");
+        textBox.setContentText("Name");
+        textBox.showAndWait();
+        this.p1Name = textBox.getEditor().getText().strip();
+        if(this.p1Name.isEmpty()) {
+            this.p1Name = "Player 1";
+        }
+        this.playerNameLbl.setText(this.p1Name);
     }
 
 }

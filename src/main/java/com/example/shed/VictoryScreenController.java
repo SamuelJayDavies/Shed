@@ -38,9 +38,15 @@ public class VictoryScreenController {
 
     private GameType gameType;
 
+    private Image p1ProfilePic;
+
+    private String p1Name;
+
     public void switchToShed(ActionEvent event) throws IOException {
         ShedController shedController = new ShedController();
         shedController.setGameType(this.gameType);
+        shedController.setP1profilePic(this.p1ProfilePic);
+        shedController.setP1Name(this.p1Name);
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("shed.fxml"));
         fxmlLoader.setController(shedController);
 
@@ -74,5 +80,13 @@ public class VictoryScreenController {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+    }
+
+    public void setP1ProfilePic(Image image) {
+        this.p1ProfilePic = image;
+    }
+
+    public void setP1Name(String name) {
+        this.p1Name = name;
     }
 }

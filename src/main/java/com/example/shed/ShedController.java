@@ -66,6 +66,9 @@ public class ShedController {
     @FXML
     Label gameTypeBackLbl;
 
+    @FXML
+    private Label p1NameLbl;
+
     // Java Variables
 
     private Deck drawPile;
@@ -91,6 +94,8 @@ public class ShedController {
     private ArrayList<Image> stackSnapShotImgs;
 
     private Image p1ProfilePic;
+
+    private String p1Name;
 
     public ShedController() {
 
@@ -161,6 +166,8 @@ public class ShedController {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        p1NameLbl.setText(this.p1Name);
 
         discardPileImg.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
@@ -299,6 +306,8 @@ public class ShedController {
         if(gameOver) {
             VictoryScreenController victoryController = new VictoryScreenController();
             victoryController.setGameType(this.gameType);
+            victoryController.setP1ProfilePic(this.p1profileImg.getImage());
+            victoryController.setP1Name(this.p1Name);
             FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("victory-screen.fxml"));
             fxmlLoader.setController(victoryController);
 
@@ -712,6 +721,10 @@ public class ShedController {
 
     public void setP1profilePic(Image profilePic) {
         this.p1ProfilePic = profilePic;
+    }
+
+    public void setP1Name(String name) {
+        this.p1Name = name;
     }
 
 }
