@@ -8,9 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import shed.GameType;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,6 +24,9 @@ public class ModeSelectController {
 
     @FXML
     private ImageView iconPicImg;
+
+    @FXML
+    private ImageView profilePicImg;
 
     private Stage stage;
     private Scene scene;
@@ -65,6 +70,7 @@ public class ModeSelectController {
     private void switchToShed(ActionEvent event, GameType gameType) throws IOException {
         ShedController shedController = new ShedController();
         shedController.setGameType(gameType);
+        shedController.setP1profilePic(profilePicImg.getImage());
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("shed.fxml"));
         fxmlLoader.setController(shedController);
 
@@ -85,6 +91,20 @@ public class ModeSelectController {
         stage.setTitle("Shed: Help Screen");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void setProfilePicture() {
+        FileChooser fileChooser = new FileChooser();
+        File selectedPicture = fileChooser.showOpenDialog(stage);
+        if(selectedPicture != null) {
+            try{
+                InputStream stream = new FileInputStream(selectedPicture);
+                profilePicImg.setImage(new Image(stream));
+            }catch(IOException e) {
+                // Change this to use ALERT
+                System.out.println("Please select an image");
+            }
+        }
     }
 
 }

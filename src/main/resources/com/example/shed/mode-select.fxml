@@ -52,12 +52,17 @@
             </Pane>
             <Pane layoutX="286.0" prefHeight="182.0" prefWidth="172.0">
                <children>
-                  <ImageView id="playerProfileImg" fitHeight="113.0" fitWidth="101.0" layoutX="71.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="playerProfileImg" fx:id="profilePicImg" fitHeight="113.0" fitWidth="101.0" layoutX="71.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="file:/C:/Users/samjd/!IntelliJ%20Projects/Shed/src/images/profilePicture.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="playerNameLbl" alignment="CENTER" layoutX="71.0" layoutY="116.0" prefHeight="17.0" prefWidth="101.0" text="Guest" textFill="WHITE" />
+                  <Label fx:id="playerNameLbl" alignment="CENTER" layoutY="51.0" prefHeight="17.0" prefWidth="47.0" text="Guest" textFill="WHITE" />
+                  <Button id="selectBtn" fx:id="selectBtn" layoutX="98.0" layoutY="116.0" mnemonicParsing="false" onAction="#setProfilePicture" text="Select" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </Pane>
             <Button id="helpBtn" fx:id="helpBtn" layoutX="417.0" layoutY="269.0" mnemonicParsing="false" onAction="#switchToHelpScreen" text="Help" textAlignment="CENTER" textFill="WHITE" wrapText="true">

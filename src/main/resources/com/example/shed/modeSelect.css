@@ -17,8 +17,9 @@
 
 #noBtn,
  #yesBtn,
-   #returnBtn{
-     -fx-background-radius: 30 30 30 30;
+   #returnBtn,
+      #selectBtn{
+        -fx-background-radius: 30 30 30 30;
 }
 
 #helpBtn {

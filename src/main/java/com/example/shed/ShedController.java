@@ -90,6 +90,8 @@ public class ShedController {
 
     private ArrayList<Image> stackSnapShotImgs;
 
+    private Image p1ProfilePic;
+
     public ShedController() {
 
     }
@@ -150,7 +152,7 @@ public class ShedController {
         try {
             FileInputStream profileStream = new FileInputStream("src\\images\\profilePicture.png");
             Image profiePic = new Image(profileStream);
-            p1profileImg.setImage(profiePic);
+            p1profileImg.setImage(p1ProfilePic);
             p2profileImg.setImage(profiePic);
 
             FileInputStream drawDeckStream = new FileInputStream("src\\main\\java\\higherOrLower\\cards\\back_of_card.png");
@@ -706,6 +708,10 @@ public class ShedController {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+    }
+
+    public void setP1profilePic(Image profilePic) {
+        this.p1ProfilePic = profilePic;
     }
 
 }
