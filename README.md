@@ -72,6 +72,7 @@ Essentially, fast track will be a far shorter game and basic simplifies the rule
 being played or extra turns.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
+# Controls
 
 To place a card simply drag and drop the desired card onto the discard pile.
 
