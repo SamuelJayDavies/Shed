@@ -73,8 +73,10 @@ being played or extra turns.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
-# How to Run
-Install the zip and navigate to the exe folder. Once there, simply click on the GameOfShed.bat file and the game will start. The game can be played
-with only the exe folder, but the help screen requires the helpTxt file.
+To place a card simply drag and drop the desired card onto the discard pile.
 
-Hope you enjoy playing, was just a quick side project I made because of how much I played this card game in my first year of university.
+If you cannot play a card click on the discard pile to pick up all the last played cards.
+
+To play multiple cards drag and drop a card on another card of the same value. This will stack both cards on top of each other so that both are played when dragged. 
+
+If a different card is played when multiple cards are stacked, the cards will unstack. 
